@@ -1,6 +1,6 @@
 -- SQL-команды для создания таблиц
 
-CREATE TABLE employees
+CREATE TABLE IF NOT EXISTS employees
 (
 	employee_id int PRIMARY KEY,
 	first_name varchar(100) NOT NULL,
@@ -10,18 +10,18 @@ CREATE TABLE employees
 	notes text
 );
 
-CREATE TABLE customers
+CREATE TABLE IF NOT EXISTS customers
 (
 	customer_id varchar(100) PRIMARY KEY,
 	company_name varchar(100) NOT NULL,
 	contact_name varchar(100) NOT NULL
 );
 
-CREATE TABLE orders
+CREATE TABLE IF NOT EXISTS orders
 (
 	order_id int PRIMARY KEY,
-	customer_id varchar(100) REFERENCES customers(customer_id) NOT NULL,
-	employee_id int REFERENCES employees(employee_id) NOT NULL,
+	customer_id varchar(100) REFERENCES customers(customer_id) ON DELETE CASCADE NOT NULL,
+	employee_id int REFERENCES employees(employee_id) ON DELETE CASCADE NOT NULL,
 	order_date date,
 	ship_city text
 );
