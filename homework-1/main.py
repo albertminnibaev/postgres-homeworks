@@ -3,7 +3,14 @@
 import psycopg2
 import csv
 import os
+from dotenv import load_dotenv
 
+load_dotenv()
+
+HOST = os.getenv("HOST")
+DATABASE = os.getenv("DATABASE")
+USER = os.getenv("USER")
+PASSWORD = os.getenv("PASSWORD")
 
 # переменные для хранения адреса к файлам с данными
 customers_data_csv = os.path.join("north_data", "customers_data.csv")
@@ -26,7 +33,8 @@ def get_data(file):
 
 
 if __name__ == "__main__":
-    with psycopg2.connect(host="localhost", database="north", user="postgres", password="albert") as conn:
+    #with psycopg2.connect(host="localhost", database="north", user="postgres", password="albert") as conn:
+    with psycopg2.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD) as conn:
         with conn.cursor() as cur:
             for i in get_data(employees_data_csv):
                 cur.execute(f"INSERT INTO employees VALUES (%s, %s, %s, %s, %s, %s)", i)
